@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Canteen Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: #bd0404;
+            background-image: url('ssss.jpg');
+            background-size: cover;
+            background-blend-mode: multiply;
+            color: #ffcc66;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .header img {
+            height: 250px;
+            margin-right: 20px;
+        }
+
+        .header h1 {
+            flex-grow: 2;
+            text-align: center;
+            margin: 0;
+            font-size: 58px;
+            text-transform: uppercase;
+            letter-spacing: 35px;
+        }
+
+        .menu-container {
+            display: flex;
+        }
+
+        .side-section {
+            background-color: #ffcc66;
+            width: 30%;
+            height: calc(100vh - 250px);
+            padding: 60px;
+            box-sizing: border-box;
+        }
+
+        .side-section h3 {
+            color: #a40404;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .side-section .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .side-section .menu-buttons button {
+            background-color: #ffcc66;
+            color: #a40404;
+            border: 2px solid #a40404;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 8px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .side-section .menu-buttons button:hover {
+            background-color: #a40404;
+            color: #fff;
+            border-color: #a40404;
+        }
+
+        .side-section .menu-buttons button.active {
+            background-color: #a40404;
+            color: #fff;
+            border-color: #a40404;
+        }
+
+        .main-content {
+            width: 70%;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .menu-title {
+            text-align: center;
+            font-size: 36px;
+            color: #a40404;
+            margin-bottom: 20px;
+        }
+
+        .cart-buttons {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .cart-buttons img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-buttons img:hover {
+            transform: scale(1.1);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .menu-item {
+            background-color: #ffcc66;
+            color: #a40404;
+            border: 2px solid #a40404;
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background-color: #a40404;
+            color: #fff;
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-item h3 {
+            margin: 10px 0;
+            font-size: 20px;
+        }
+
+        .logout-button {
+            background-color: #a40404;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #ffcc66;
+            color: #a40404;
+        }
+    </style>
+       <script>
+        const menuData = {
+            mainCourse: [
+                { name: "ADOBO", price: 100, img: "adobo.jpg" },
+                { name: "SINIGANG", price: 120, img: "sinigang.jpg" },
+                { name: "LECHON KAWALI", price: 150, img: "lechon kawali.jpg" },
+                { name: "KARE-KARE", price: 130, img: "kare kare.jpg" }
+            ],
+            appetizer: [
+                { name: "LUMPIA", price: 50, img: "lumpia.jpg" },
+                { name: "CALAMARES", price: 70, img: "calamares.jpg" },
+                { name: "NACHOS", price: 80, img: "nachos.jpg" },
+                { name: "SIOMAI", price: 60, img: "siomai.jpg" }
+            ],
+            snacks: [
+                { name: "BURGER", price: 90, img: "burger.jpg" },
+                { name: "FRIES", price: 50, img: "fries.jpg" },
+                { name: "HOTDOG", price: 60, img: "hotdog.jpg" },
+                { name: "SANDWICH", price: 70, img: "sandwich.jpg" }
+            ],
+            drinks: [
+                { name: "COKE", price: 20, img: "coke.jpg" },
+                { name: "COFFEE", price: 50, img: "coffeee.jpeg" },
+                { name: "JUICE", price: 30, img: "juice.jpg" },
+                { name: "WATER", price: 20, img: "water.png" }
+            ]
+        };
+
+        function loadMenu(category) {
+            const menuGrid = document.querySelector(".menu-grid");
+            const menuTitle = document.querySelector(".menu-title");
+            const buttons = document.querySelectorAll(".menu-buttons button");
+            const titles = {
+                mainCourse: "Main Course",
+                appetizer: "Appetizer",
+                snacks: "Snacks",
+                drinks: "Drinks"
+            };
+
+            buttons.forEach(button => button.classList.remove('active'));
+
+            const activeButton = document.querySelector(`button[onclick="loadMenu('${category}')"]`);
+            activeButton.classList.add('active');
+
+            menuTitle.textContent = titles[category];
+
+            menuGrid.innerHTML = menuData[category]
+                .map(item => `
+                    <div class="menu-item">
+                        <a href="addfood.html?dish=${encodeURIComponent(item.name)}&price=${item.price}&img=${item.img}&category=${category}">
+                            <img src="${item.img}" alt="${item.name}">
+                            <h3>${item.name}<br>₱${item.price}</h3>
+                        </a>
+                    </div>
+                `)
+                .join("");
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadMenu("mainCourse");
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <img src="sscr logo.png" alt="School Logo">
+        <h1>SEBAS-TEEN<br><span style="font-size: 34px; letter-spacing: normal;">SCHOOL CANTEEN</span></h1>
+    </div>
+
+    <div class="menu-container">
+        <div class="side-section">
+            <h3>PRE SELECT:</h3>
+            <div class="menu-buttons">
+                <button onclick="loadMenu('mainCourse')">Main Course</button>
+                <button onclick="loadMenu('appetizer')">Appetizer</button>
+                <button onclick="loadMenu('snacks')">Snacks</button>
+                <button onclick="loadMenu('drinks')">Drinks</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="cart-buttons">
+                <!-- Cart Icon - Click to go to the Cart Page -->
+                <a href="iconcart.html">
+                    <img src="carts.png" alt="Cart">
+                </a>
+            
+                <!-- Receipt Icon - Show message or trigger checkout -->
+                <img src="digital-receipt.png" alt="Receipt" onclick="showReceipt()">
+            
+                <!-- Logout Button -->
+                <button class="logout-button" onclick="logout()">Logout</button>
+            </div>
+            
+            <script>
+                // Function to display receipt (you can modify to show an actual receipt or proceed to checkout)
+                function showReceipt() {
+                    alert('Proceeding to Receipt or Checkout!');
+                    // You can add code here to navigate to a receipt or checkout page if needed
+                }
+            
+                // Function for logging out (modify this based on your app logic)
+                function logout() {
+                    // Clear any session or localStorage data (if any)
+                    localStorage.removeItem('cart'); // Optional: clear cart data when logging out
+            
+                    // Redirect to the login page or perform any other logout action
+                    window.location.href = 'login.html';  // Redirect to the login page (adjust as needed)
+                }
+            </script>
+            
+
+            <h2 class="menu-title">Main Course</h2>
+            <div class="menu-grid">
+                <!-- Menu items will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function logout() {
+            const confirmLogout = confirm("Are you sure you want to log out?");
+            if (confirmLogout) {
+                window.location.href = "login.html"; // Redirect to the login page
+            }
+        }
+    </script>
+</body>
+</html>

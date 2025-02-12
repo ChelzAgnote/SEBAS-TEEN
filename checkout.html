@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+
+    /* Header */
+    .header {
+      background-color: #bd0404;
+      background-image: url('ssss.jpg');
+      background-size: cover;
+      background-blend-mode: multiply;
+      color: #ffcc66;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 30px;
+    }
+
+
+    .header h1 {
+      margin: 0;
+      font-size: 90px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #ffcc66;
+    }
+
+
+    .container {
+      display: flex;
+      height: calc(100vh - 250px);
+    }
+
+
+    /* Sidebar */
+    .sidebar {
+      background-color: #ffcc66;
+      width: 30%;
+      padding: 60px 20px;
+      box-sizing: border-box;
+      border-right: 2px solid #a40404;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+
+    .sidebar h3 {
+      color: #a40404;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+
+    .menu-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+
+    .cash-on-pickup {
+      background-color: #bd0404;
+      color: white;
+      border: 2px solid #a40404;
+      padding: 20px;
+      font-size: 18px;
+      border-radius: 8px;
+      text-align: left;
+      transition: all 0.3s ease;
+    }
+
+
+    .cash-on-pickup:hover {
+      background-color: #a40404;
+    }
+
+
+    .cash-on-pickup label {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+
+    .cash-on-pickup input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+
+    .menu-buttons button {
+      background-color: #ffcc66;
+      color: #a40404;
+      border: 2px solid #a40404;
+      padding: 15px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 8px;
+      text-align: left;
+      transition: all 0.3s ease;
+    }
+
+
+    .menu-buttons button:hover {
+      background-color: #a40404;
+      color: #fff;
+    }
+
+
+    .sidebar-bottom {
+      margin-top: 20px;
+    }
+
+
+    .sidebar-bottom hr {
+      border: none;
+      border-top: 2px solid #a40404;
+      margin: 20px 0;
+    }
+
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      justify-content: center;
+    }
+
+
+    .action-buttons button {
+      flex: 1;
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+    .action-buttons a {
+      text-decoration: none;
+      color: white;
+    }
+
+
+    .place-order {
+      background-color: #bd0404;
+      color: white;
+      border: 2px solid #ffcc66;
+    }
+
+
+    .place-order:hover {
+      background-color: #ffcc66;
+      color: #a40404;
+      border:2px solid #a40404;
+       
+    }
+
+
+    .cancel-order {
+        background-color: #bd0404;
+      color: white;
+      border: 2px solid #ffcc66;
+    }
+
+
+    .cancel-order:hover {
+        background-color: #ffcc66;
+      color: #a40404;
+      border: 2px solid #a40404;
+    }
+
+
+    /* Main content */
+    .main-content {
+      width: 70%;
+      background-color: #fff;
+      padding: 40px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+
+    .main-content h1 {
+      text-align: left;
+      font-size: 2.5em;
+      color: #a40404;
+      margin-bottom: 30px;
+      text-transform: none;
+      letter-spacing: 2px;
+    }
+
+
+    .order-summary {
+      margin: 0 auto;
+      max-width: 600px;
+    }
+
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      border: 2px solid #a40404;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      background-color: #ffcc66;
+      transition: all 0.3s ease;
+    }
+
+
+    .order-item:hover {
+      background-color: #a40404;
+      color: #fff;
+    }
+
+
+    .order-item img {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+
+    .order-details {
+      flex: 1;
+      margin-left: 15px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+
+    .order-details p {
+      margin: 0;
+    }
+
+
+    .order-price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #a40404;
+    }
+
+
+    .order-item:hover .order-price {
+      color: #ffcc66;
+    }
+
+
+    .total {
+      display: block;
+      width: fit-content;
+      padding: 10px 30px;
+      border: 2px solid #a40404;
+      border-radius: 50px;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #a40404;
+      margin: 30px auto;
+      transition: all 0.3s ease;
+    }
+
+
+    .total:hover {
+      background-color: #ffcc66;
+      color: #a40404;
+      cursor: pointer;
+    }
+
+
+    .need-help {
+      text-align: right;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #888;
+    }
+    .need-help:hover {
+      color: #a40404;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Red Header with "CHECKOUT" -->
+  <div class="header">
+    <h1>CHECKOUT</h1>
+  </div>
+
+
+  <div class="container">
+    <!-- Sidebar updated to follow the provided layout -->
+    <div class="sidebar">
+      <div class="sidebar-top">
+        <h3>CHOOSE PAYMENT METHOD:</h3>
+        <div class="menu-buttons">
+          <div class="cash-on-pickup">
+            CASH on Pick up
+            <label for="add-change">Add change for:</label>
+            <form onsubmit="storeCashAmount()">
+              <input type="number" id="cash-amount" name="cash-amount" placeholder="Enter cash amount" required>
+              <button type="submit">Checkout</button>
+          </form>          </div>
+          <button>GCASH</button>
+        </div>
+      </div>
+      <div class="sidebar-bottom">
+        <hr />
+        <div class="action-buttons">
+          <button class="place-order">
+           <a href="placeOrder.html">Place Order</a> 
+          </button>
+          <button class="cancel-order">
+           <a href="iconcart.html">Cancel Order</a> 
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Main content area with order details -->
+    <div class="main-content">
+      <h1>Order summary:</h1>
+      <div class="order-summary" id="order-summary">
+        <!-- Order items will be displayed here -->
+      </div>
+      <div class="total">TOTAL = ₱<span id="total-price">0</span></div>
+      <div class="need-help">Need Help?</div>
+    </div>
+  </div>
+
+
+  <script>
+    window.onload = function() {
+        // Get cart data from localStorage when the page loads
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const orderSummary = document.getElementById('order-summary');
+
+
+        cart.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'order-item';
+            itemElement.innerHTML = `
+                <img src="${item.dishImg}" alt="${item.dishName}" />
+                <div class="order-details">
+                    <p>
+                        <strong>${item.dishName}</strong><br />
+                        Add ons: Rice (${item.addOns.rice}), Soup (${item.addOns.soup})
+                    </p>
+                </div>
+                <p class="order-price">₱${item.quantity * 60 + item.addOns.rice * 10 + item.addOns.soup * 10}</p>
+            `;
+            orderSummary.appendChild(itemElement);
+        });
+
+
+        updateTotalPrice();
+    };
+
+
+    function updateTotalPrice() {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let totalPrice = 0;
+        cart.forEach(item => {
+            totalPrice += item.quantity * 60; // Assuming each item costs ₱60
+            totalPrice += item.addOns.rice * 10; // Assuming each rice add-on costs ₱10
+            totalPrice += item.addOns.soup * 10; // Assuming each soup add-on costs ₱10
+        });
+        document.getElementById('total-price').innerText = totalPrice;
+    }
+
+    function storeCashAmount() {
+        const cashAmount = document.getElementById('cash-amount').value;
+        localStorage.setItem('cashAmount', cashAmount);
+    }
+  </script>
+</body>
+</html>

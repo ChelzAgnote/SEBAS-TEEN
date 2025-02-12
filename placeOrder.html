@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .header {
+            background-color: #bd0404;
+            color: black;
+            padding: 80px 20px;
+            text-align: center;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .header img {
+            position: absolute;
+            left: 16px;
+            max-width: 50px;
+        }
+
+        .header h1 {
+            margin: 0%;
+            font-size: 90px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffcc66;
+        }
+
+        .layout {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 30%;
+            background-color: #ffcc66;
+            padding: 16px;
+            border-right: 2px solid #a40404;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .sidebar h2 {
+            color: #a40404;
+            font-size: 22px;
+            margin-bottom: 200px;
+            margin-top: 80px;
+        }
+
+        .sidebar .divider {
+            
+            margin: 16px auto;
+            width: 1000%;
+            height: 3px;
+            background-color: #a40404;
+        }
+
+        .sidebar button {
+            background-color: #a40404;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            width: 80%;
+        }
+        
+        .backMenu{
+            color: white;
+            text-decoration: none;
+        }
+
+        .sidebar button:hover {
+            background-color: #d32f2f;
+            border: 3px solid #bd0404;
+            transition: all 0.2s ease;
+        }
+       
+        .Help{
+            color: #d32f2f;
+            font-size: 15px;
+            text-decoration: none;
+        }
+        .Help:hover{
+            color: #bd0404;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        
+     
+        
+        .main-content {
+            flex: 1;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f8f8;
+        }
+
+        .receipt {
+            height: 550px;
+            width: 450px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .receipt .header {
+            background-color: #d32f2f;
+            color: white;
+            padding: 8px;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .receipt .header h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .receipt .info {
+            margin: 12px 0;
+            font-size: 16px;
+        }
+
+        .receipt .items {
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .receipt .items .item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .receipt .totals {
+            text-align: right;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .receipt .button {
+            display: none;
+        }
+
+        .receipt .footer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="Logo">
+        <h1>RECEIPT</h1>
+    </div>
+
+    <div class="layout">
+        <div class="sidebar">
+            <h2>Thank you for choosing SEBAS-TEEN!</h2>
+            <div class="divider"></div>
+            <button>
+                <a href="menu.html"  class="backMenu">BACK TO MENU</a>
+            </button>
+            <br>
+            <a class="Help">Need Help?</a>
+        </div>
+
+        <div class="main-content">
+            <div class="receipt">
+                <div class="header">
+                    <h1>SEBAS-TEEN</h1>
+                    <p>Order No. 168<br>#ORD 168 - REG 1/27/25 - 10:52:24</p>
+                </div>
+                <div class="info">
+                    <h2>Show order number to claim.</h2>
+                </div>
+                <div class="items" id="order-items">
+                    <!-- Items will be dynamically loaded here -->
+                </div>
+                <div class="totals">
+                    <div class="item"><span>Total:</span><span id="total-price">0.00</span></div>
+                    <div class="item"><span>Cash:</span><span id="cash-amount">0.00</span></div>
+                    <div class="item"><span>Change:</span><span id="change">0.00</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Get cart data from localStorage when the page loads
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const orderItems = document.getElementById('order-items');
+            let totalPrice = 0;
+
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'item';
+                const itemPrice = item.quantity * 60 + item.addOns.rice * 10 + item.addOns.soup * 10;
+                itemElement.innerHTML = `
+                    <span>${item.quantity} ${item.dishName}</span><span>₱${itemPrice.toFixed(2)}</span>
+                `;
+                orderItems.appendChild(itemElement);
+                totalPrice += itemPrice;
+            });
+
+            document.getElementById('total-price').innerText = totalPrice.toFixed(2);
+
+            // Retrieve cash amount from localStorage
+            const cashAmount = parseFloat(localStorage.getItem('cashAmount')) || 0;
+            document.getElementById('cash-amount').innerText = cashAmount.toFixed(2);
+
+            // Calculate and display change
+            const change = cashAmount - totalPrice;
+            document.getElementById('change').innerText = change.toFixed(2);
+        };
+    </script>
+</body>
+</html>

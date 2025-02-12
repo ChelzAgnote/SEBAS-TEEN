@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Canteen Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: #bd0404; /* Red background */
+            background-image: url('ssss.jpg'); /* Background image */
+            background-size: cover;
+            background-blend-mode: multiply;
+            color: #ffcc66; /* Gold color for the text */
+            height: 250px; /* Increased height */
+            display: flex;
+            align-items: center;
+            padding: 0 30px; /* Increased padding */
+        }
+
+        .header img {
+            height: 200px; /* Enlarged logo */
+            margin-right: 20px; /* Increased margin */
+        }
+
+        .header h1 {
+            flex-grow: 2;
+            text-align: center;
+            margin: 0;
+            font-size: 58px; /* Enlarged font size */
+            text-transform: uppercase;
+            letter-spacing: 35px; /* Added spacing between letters */
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 120px); /* Full height minus header */
+        }
+
+        .side-section {
+            background-color: #eed06f; /* Pale yellow */
+            width: 30%; /* Left section width */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px; /* Increased padding */
+            box-sizing: border-box;
+        }
+
+        .side-section .welcome {
+            color: #a40404; /* Red text */
+            font-size: 66px; /* Larger font size */
+            font-weight: bold;
+            margin-bottom: 0px;
+        }
+
+        .side-section p {
+            color: #555;
+            font-size: 18px; /* Enlarged font size */
+        }
+
+        .form-section {
+            width: 60%; /* Right section width */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px; /* Increased padding */
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            width: 90%; /* Increased container width */
+            background-color: #fff;
+            border-radius: 12px; /* Rounded corners */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+            padding: 40px; /* Increased padding */
+            box-sizing: border-box;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px; /* Enlarged font size */
+            color: #a40404; /* Red text */
+        }
+
+        form input[type="text"],
+        form input[type="password"],
+        form input[type="email"] {
+            width: 100%;
+            padding: 15px; /* Increased padding */
+            border: 2px solid #a40404; /* Red border */
+            border-radius: 8px; /* Rounded corners */
+            margin-bottom: 20px; /* Increased spacing */
+            background-color: #fff8e1; /* Light yellow */
+            font-size: 16px; /* Enlarged font size */
+        }
+
+        form button {
+            width: 100%;
+            background-color: #ffcc66; /* Gold background */
+            border: none;
+            padding: 15px; /* Increased padding */
+            color: #a40404; /* Red text */
+            font-weight: bold;
+            font-size: 18px; /* Enlarged font size */
+            cursor: pointer;
+            border-radius: 8px; /* Rounded corners */
+        }
+
+        form button:hover {
+            background-color: #ffa31a; /* Darker gold on hover */
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .links {
+            margin-top: 20px;
+            font-size: 16px; /* Enlarged font size */
+            text-align: left;
+        }
+
+        .links a {
+            color: #a40404; /* Red text */
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .password-strength {
+            font-size: 14px;
+            color: green;
+        }
+
+        .password-strength.weak {
+            color: red;
+        }
+    </style>
+    <script>
+        function showLogin() {
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('sign-up-form').style.display = 'none';
+            document.getElementById('forgot-password-form').style.display = 'none';
+        }
+
+        function showSignUp() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('sign-up-form').style.display = 'block';
+            document.getElementById('forgot-password-form').style.display = 'none';
+        }
+
+        function showForgotPassword() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('sign-up-form').style.display = 'none';
+            document.getElementById('forgot-password-form').style.display = 'block';
+        }
+
+        // Function to check password strength and confirm match
+        function validatePassword() {
+            var password = document.getElementById('new-password').value;
+            var confirmPassword = document.getElementById('confirm-password').value;
+            var passwordStrength = document.getElementById('password-strength');
+            var confirmPasswordError = document.getElementById('confirm-password-error');
+            var passwordError = document.getElementById('password-error');
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = "Passwords do not match!";
+                return false;
+            } else {
+                confirmPasswordError.textContent = "";
+            }
+
+            // Check password strength
+            if (password.length < 8) {
+                passwordStrength.textContent = "Password is too short!";
+                passwordStrength.className = "password-strength weak";
+                return false;
+            } else {
+                passwordStrength.textContent = "Password is strong.";
+                passwordStrength.className = "password-strength";
+            }
+
+            return true;
+        }
+
+        // Login validation
+        function validateLogin() {
+            var studentNumber = document.getElementById('student-number').value;
+            var password = document.getElementById('password').value;
+
+            if (studentNumber && password) {
+                // Redirect to the menu page upon successful login
+                window.location.href = 'menu.html';
+                return false; // Prevent form submission
+            } else {
+                alert('Please enter both student number and password!');
+                return false;
+            }
+        }
+
+        window.onload = showLogin; // Default to Login form on page load
+    </script>
+</head>
+<body>
+    <div class="header">
+        <img src="sscr logo.png" alt="School Logo">
+        <h1>SEBAS-TEEN
+            <br>
+            <span style="font-size: 34px; letter-spacing: normal;">SCHOOL CANTEEN</span>
+        </h1>
+    </div>
+
+    <div class="container">
+        <div class="side-section">
+            <div class="welcome">Welcome Sebastinian!</div>
+            <p>Your canteen account is ready to serve you!</p>
+        </div>
+
+        <div class="form-section">
+            <div class="form-container" id="login-form">
+                <form onsubmit="return validateLogin()">
+                    <label for="student-number">Student number:</label>
+                    <input type="text" id="student-number" placeholder="Enter your student number">
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" placeholder="Enter your password">
+
+                    <button type="submit">Login</button>
+                </form>
+                <div class="links">
+                    <a href="javascript:void(0);" onclick="showSignUp()">Sign up</a> | 
+                    <a href="javascript:void(0);" onclick="showForgotPassword()">Forgot password?</a>
+                </div>
+            </div>
+
+            <div class="form-container" id="sign-up-form" style="display: none;">
+                <form onsubmit="return validatePassword()">
+                    <label for="new-student-number">Student number:</label>
+                    <input type="text" id="new-student-number" placeholder="Enter your student number">
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder="Enter your email">
+
+                    <label for="new-password">Password:</label>
+                    <input type="password" id="new-password" placeholder="Enter your password">
+
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" placeholder="Confirm your password">
+
+                    <div class="error" id="confirm-password-error"></div>
+                    <div class="password-strength" id="password-strength"></div>
+                    <div class="error" id="password-error"></div>
+
+                    <button type="submit">Sign Up</button>
+                </form>
+                <div class="links">
+                    <a href="javascript:void(0);" onclick="showLogin()">Already have an account? Login</a>
+                </div>
+            </div>
+
+            <div class="form-container" id="forgot-password-form" style="display: none;">
+                <form>
+                    <label for="email">Enter your email address:</label>
+                    <input type="email" id="email" placeholder="Enter your email">
+
+                    <button type="submit">Reset Password</button>
+                </form>
+                <div class="links">
+                    <a href="javascript:void(0);" onclick="showLogin()">Remembered your password? Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
